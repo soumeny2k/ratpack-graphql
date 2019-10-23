@@ -19,8 +19,12 @@ ratpack {
     get("health", HealthCheckHandler)
     all(XForwardedForNcsaRequestLogger.INSTANCE)
 
-    get {
+    get("hello") {
       render "Hello World!"
+    }
+
+    get("version") {
+      render "1.0.0"
     }
   }
 }
