@@ -1,27 +1,21 @@
-import com.target.platform.connector.ratpack.groovy.Platform
-import com.target.platform.connector.ratpack.guice.PlatformModule
-import com.target.platform.connector.ratpack.XForwardedForNcsaRequestLogger
+import com.gql.example.handler.UserHandler
 import ratpack.health.HealthCheckHandler
 
 import static ratpack.groovy.Groovy.ratpack
 
 ratpack {
-  serverConfig(Platform.connect {
-    sysProps()
-    env()
-  })
   bindings {
-    module(PlatformModule)
     bind(HealthCheckHandler)
+    bind(UserHandler)
   }
   handlers {
 
     get("health", HealthCheckHandler)
-    all(XForwardedForNcsaRequestLogger.INSTANCE)
-
-    get("hello") {
-      render "Hello World!"
+    get {
+      ctx -> render("Welcome to Ratpack")
     }
+
+    post("users", UserHandler)
 
     get("version") {
       render "1.0.0"
